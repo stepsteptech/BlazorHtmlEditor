@@ -1,0 +1,85 @@
+﻿@page "/"
+@using Blazored.TextEditor
+
+<PageTitle>Index</PageTitle>
+
+<div class="alert alert-info">
+    <h2>Html Editor In Blazor</h2>
+    <p>
+        integrate the Blazored.texteditor with quill html editor in blazor
+    </p>
+</div>
+
+<div class="col-md-8">
+    <div class="card">
+        <div class="card-header">
+            Html Text Editor
+        </div>
+        <div class="card-body mb-5" style="height:200px;">
+
+           <BlazoredTextEditor @ref=QuillHtml Placeholder="write somthing...">
+
+               <ToolbarContent>
+                    <select class="ql-header">
+                        <option selected=""></option>
+                        <option value="1"></option>
+                        <option value="2"></option>
+                        <option value="3"></option>
+                        <option value="4"></option>
+                        <option value="5"></option>
+                    </select>
+                    <span class="ql-formats">
+                        <button class="ql-bold"></button>
+                        <button class="ql-italic"></button>
+                        <button class="ql-underline"></button>
+                        <button class="ql-strike"></button>
+                    </span>
+                    <span class="ql-formats">
+                        <select class="ql-color"></select>
+                        <select class="ql-background"></select>
+                    </span>
+                    <span class="ql-formats">
+                        <button class="ql-list" value="ordered"></button>
+                        <button class="ql-list" value="bullet"></button>
+                    </span>
+                    <span class="ql-formats">
+                        <button class="ql-link"></button>
+                    </span>
+                    <span class="ql-formats">
+                        <button class="ql-video"></button>
+                    </span>
+
+               </ToolbarContent>
+
+           </BlazoredTextEditor>
+
+        </div>
+        <div class="card-footer">
+            <button class="btn btn-success" @onclick=@(async ()=> await ShowAoutPutPreview() )>Show OutPut</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            the preview Of html editor
+        </div>
+        <div class="card-body">
+            @preview
+        </div>
+    </div>
+
+</div>
+@code
+{
+    private BlazoredTextEditor QuillHtml;
+    private MarkupString preview;
+
+    private async Task ShowAoutPutPreview()
+    {
+        if(!string.IsNullOrWhiteSpace(await QuillHtml.GetText()))
+        {
+            preview = (MarkupString)await QuillHtml.GetHTML();
+        }
+
+    }
+}
